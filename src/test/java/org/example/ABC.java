@@ -11,7 +11,7 @@ public class ABC {
         Playwright playwright = Playwright.create();
         ArrayList<String> arguments = new ArrayList<>();
         arguments.add("--start-maximized");
-        Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(false).setArgs(arguments).setSlowMo(50));
+        Browser browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true).setArgs(arguments).setSlowMo(50));
         BrowserContext browserContext = browser.newContext(new Browser.NewContextOptions().setViewportSize(null));
         Page page = browserContext.newPage();
         page.navigate("http://playwright.dev");
