@@ -17,8 +17,13 @@ public class ABC {
         Page page = browserContext.newPage();
         page.navigate("http://playwright.dev");
         System.out.println(page.title());
-        Assert.assertEquals(1+1,7);
+        Assert.assertEquals(1+1,2);
         page.close();
         playwright.close();
     }
+    @Test
+    void test2(){
+        Assert.assertEquals(1+1,2);
+    }
+
 }
