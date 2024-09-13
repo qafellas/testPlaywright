@@ -37,6 +37,7 @@ jobs:
         run: mvn clean test
 
       - name: Merge junit xml reports
+        if: always()
         run: junit-merge  -o results.xml -d target/surefire-reports/junitreports/
 
       - name: Test Report
