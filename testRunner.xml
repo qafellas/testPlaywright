@@ -3,6 +3,7 @@
     <test name="MyTests">
         <classes>
             <class name="org.example.ABC"/> <!-- Change to your actual test class -->
+            <class name="org.example.Functions"/>
         </classes>
     </test>
 </suite>
