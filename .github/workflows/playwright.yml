@@ -22,7 +22,7 @@ jobs:
               node-version: 16
 
       - name: Install junit merge
-        run: npm install -g junit-merge
+        run: npm install -g junit-merge fs
 
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v3
@@ -47,3 +47,31 @@ jobs:
             name: Playwright Tests            # Name of the check run which will be created
             path: results.xml   # Path to test results
             reporter: java-junit
+
+      - name: Read Test Report URL
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Available outputs:"
+          echo "${{ toJSON(steps.test_report.outputs) }}"
+          echo "Check run URL: ${{ steps.test_report.outputs.url }}"
+          echo "TEST_RUN_HTML=${{ steps.test_report.outputs.url_html }}" | tee -a $GITHUB_ENV
+
+      - name: Convert xml to json report
+        if: always()
+        run: mvn compile exec:java -D exec.mainClass=org.example.utilities.XmlToJsonConverter
+
+      - name : Create slack Json report
+        if: always()
+        run: node src/main/java/org/example/utilities/slackPayloadGenerator.js
+
+      - name: Send  JSON report to Slack
+        if: always()
+        id: slack
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          payload-file-path: "./jsonReporter.json"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
