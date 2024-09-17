@@ -1,3 +1,5 @@
+const fs = require('fs')
+
 let slackPayload = function () {
     let attachment = {}
     let endpoint = process.env.ENDPOINT || 'www.example.com';
