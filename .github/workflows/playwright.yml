@@ -55,13 +55,13 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "Available outputs:"
-          echo "${{ toJSON(steps.test_report.outputs) }}"
+          echo "JSON_REPORT=${{ toJSON(steps.test_report.outputs) }}" | tee -a $GITHUB_ENV
           echo "Check run URL: ${{ steps.test_report.outputs.url }}"
           echo "TEST_RUN_HTML=${{ steps.test_report.outputs.url_html }}" | tee -a $GITHUB_ENV
 
-      - name: Convert xml to json report
-        if: always()
-        run: mvn compile exec:java -D exec.mainClass=org.example.utilities.XmlToJsonConverter
+#      - name: Convert xml to json report
+#        if: always()
+#        run: mvn compile exec:java -D exec.mainClass=org.example.utilities.XmlToJsonConverter
 
       - name : Create slack Json report
         if: always()

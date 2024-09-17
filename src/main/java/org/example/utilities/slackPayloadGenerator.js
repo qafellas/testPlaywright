@@ -3,7 +3,7 @@ const fs = require('fs')
 let slackPayload = function () {
     let results
     try {
-        results = JSON.parse(fs.readFileSync('./target/report.json').toString());
+        results = process.env.JSON_REPORT;
     } catch (err) {
         throw new Error(err.message)
 
@@ -16,16 +16,16 @@ let slackPayload = function () {
     let githubRunId = process.env.GITHUB_RUN_ID;
     let testRunHtml = process.env.TEST_RUN_HTML;
     let githubRepo = process.env.GITHUB_REPOSITORY
-    let messageText = `*Title:* :qafellas: \`Playwright Tests\`\n\n*Env:* ${endpoint}\n\n:github: Github: https://github.com/${githubRepo}/actions/runs/${githubRunId}\n\n:graph: HTML Report: ${testRunHtml}\n\n*Total Test Cases:* ${results.passed+results.skipped+results.failures}\n\n:white_check_mark: Passed: ${results.passed} | :x: Failed: ${results.failures} | ⏩ Skipped: ${results.skipped}\n\n`
+    let messageText = `*Title:* :qafellas: \`Playwright Tests\`\n\n*Env:* ${endpoint}\n\n:github: Github: https://github.com/${githubRepo}/actions/runs/${githubRunId}\n\n:graph: HTML Report: ${testRunHtml}\n\n*Total Test Cases:* ${results.passed+results.skipped+results.failed}\n\n:white_check_mark: Passed: ${results.passed} | :x: Failed: ${results.failed} | ⏩ Skipped: ${results.skipped}\n\n`
 
-    if(results.failures>0){
+    if(results.failed>0){
         attachment = {
             color: '#dc3545',
             text: `${messageText}:alert: Test execution *FAILED*. Check the failures`,
             ts: Date.now().toString(),
         }
     }
-    else if(results.failures == 0 && results.skipped == 0 && results.passed == 0){
+    else if(results.failed == 0 && results.skipped == 0 && results.passed == 0){
         attachment = {
             color: '#808080',
             elements:[],
@@ -33,7 +33,7 @@ let slackPayload = function () {
             ts: Date.now().toString(),
         }
     }
-    else if(results.failures == 0){
+    else if(results.failed == 0){
         attachment = {
             color: '#008000',
             elements:[],
