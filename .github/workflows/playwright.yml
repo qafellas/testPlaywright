@@ -55,7 +55,9 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "Available outputs:"
-          echo "JSON_REPORT=${{ toJSON(steps.test_report.outputs) }}" | tee -a $GITHUB_ENV
+          echo "FAILED=${{ steps.test_report.outputs.failed }}" | tee -a $GITHUB_ENV
+          echo "PASSED=${{ steps.test_report.outputs.passed }}" | tee -a $GITHUB_ENV
+          echo "SKIPPED=${{ steps.test_report.outputs.skipped }}" | tee -a $GITHUB_ENV
           echo "Check run URL: ${{ steps.test_report.outputs.url }}"
           echo "TEST_RUN_HTML=${{ steps.test_report.outputs.url_html }}" | tee -a $GITHUB_ENV
 
