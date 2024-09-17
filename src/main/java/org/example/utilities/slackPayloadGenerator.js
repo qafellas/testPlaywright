@@ -8,9 +8,9 @@ let slackPayload = function () {
     let githubRepo = process.env.GITHUB_REPOSITORY
 
     let results = {
-          passed: process.env.PASSED,
-          failed: process.env.FAILED,
-          skipped: process.env.SKIPPED
+          passed: parseInt(process.env.PASSED),
+          failed: parseInt(process.env.FAILED),
+          skipped: parseInt(process.env.SKIPPED)
     }
     let messageText = `*Title:* :qafellas: \`Playwright Tests\`\n\n*Env:* ${endpoint}\n\n:github: Github: https://github.com/${githubRepo}/actions/runs/${githubRunId}\n\n:graph: HTML Report: ${testRunHtml}\n\n*Total Test Cases:* ${results.passed+results.skipped+results.failed}\n\n:white_check_mark: Passed: ${results.passed} | :x: Failed: ${results.failed} | ⏩ Skipped: ${results.skipped}\n\n`
 
