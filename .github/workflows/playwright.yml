@@ -41,6 +41,7 @@ jobs:
         run: junit-merge  -o results.xml -d target/surefire-reports/junitreports/
 
       - name: Test Report
+        id: test_report
         uses: dorny/test-reporter@v1
         if: success() || failure()    # run this step even if previous step failed
         with:
