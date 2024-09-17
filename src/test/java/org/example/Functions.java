@@ -8,4 +8,9 @@ public class Functions {
     void addition(){
         Assert.assertEquals(1+1, 2);
     }
+
+    @Test
+    void subtraction(){
+        Assert.assertEquals(1-1, 2);
+    }
 }

@@ -2,8 +2,6 @@ name: Playwright Tests
 on:
   push:
     branches: [ main, master ]
-  pull_request:
-    branches: [ master ]
 
 permissions:
   id-token: write
@@ -22,7 +20,7 @@ jobs:
               node-version: 16
 
       - name: Install junit merge
-        run: npm install -g junit-merge fs
+        run: npm install -g junit-merge
 
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v3
@@ -60,10 +58,6 @@ jobs:
           echo "SKIPPED=${{ steps.test_report.outputs.skipped }}" | tee -a $GITHUB_ENV
           echo "Check run URL: ${{ steps.test_report.outputs.url }}"
           echo "TEST_RUN_HTML=${{ steps.test_report.outputs.url_html }}" | tee -a $GITHUB_ENV
-
-#      - name: Convert xml to json report
-#        if: always()
-#        run: mvn compile exec:java -D exec.mainClass=org.example.utilities.XmlToJsonConverter
 
       - name : Create slack Json report
         if: always()
