@@ -16,7 +16,7 @@ let slackPayload = function () {
     let githubRunId = process.env.GITHUB_RUN_ID;
     let testRunHtml = process.env.TEST_RUN_HTML;
     let githubRepo = process.env.GITHUB_REPOSITORY
-    let messageText = `*Title:* :qafellas: \`Playwright Tests\`\n\n*Env:* ${endpoint}\n\n:github: Github Run: https://github.com/${githubRepo}/actions/runs/${githubRunId}\n\n:graph: Test Run HTML: ${testRunHtml}\n\n*Total Test Cases:* ${results.passed+results.skipped+results.failures}\n\n:white_check_mark: Passed: ${results.passed} | :x: Failed: ${results.failures} | ⏩ Skipped: ${results.skipped}\n\n`
+    let messageText = `*Title:* :qafellas: \`Playwright Tests\`\n\n*Env:* ${endpoint}\n\n:github: Github: https://github.com/${githubRepo}/actions/runs/${githubRunId}\n\n:graph: HTML Report: ${testRunHtml}\n\n*Total Test Cases:* ${results.passed+results.skipped+results.failures}\n\n:white_check_mark: Passed: ${results.passed} | :x: Failed: ${results.failures} | ⏩ Skipped: ${results.skipped}\n\n`
 
     if(results.failures>0){
         attachment = {
