@@ -38,7 +38,7 @@ jobs:
 
       - name: Merge junit xml reports
         if: always()
-        run: junit-merge  -o results.xml -d target/surefire-reports/junitreports/
+        run: junit-merge  -o ./target/results.xml -d target/surefire-reports/junitreports/
 
       - name: Test Report
         id: test_report
@@ -46,7 +46,7 @@ jobs:
         if: success() || failure()    # run this step even if previous step failed
         with:
             name: Playwright Tests            # Name of the check run which will be created
-            path: results.xml   # Path to test results
+            path: ./target/results.xml   # Path to test results
             reporter: java-junit
 
       - name: Read Test Report URL
